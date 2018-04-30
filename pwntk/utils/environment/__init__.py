@@ -1,7 +1,5 @@
 import os
 
-from pprint import pprint
-
 PWNTK_DEV = "PWNTK_DEV"
 
 __all__ = ["is_dev"]

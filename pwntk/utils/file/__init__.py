@@ -1,7 +1,7 @@
 import os.path
 import time
 
-__all__ = ["file_exists"]
+__all__ = ["file_exists", "timestamp_file"]
 
 def file_exists(path: str) -> bool:
     return os.path.exists(path)

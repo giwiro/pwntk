@@ -11,9 +11,8 @@ class BaseScenario(metaclass=ABCMeta):
     def run(self):
         pass
 
-    @classmethod
     @abstractmethod
-    def validate_options(cls, parser):
+    def validate_options(self, parser):
         pass
 
     @classmethod
