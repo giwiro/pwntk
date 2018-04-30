@@ -3,19 +3,15 @@ from pwntk import scenario_names, BaseScenario
 from pwntk.scenarios import StarbucksScenario
 import argparse
 import sys
-from pprint import pprint
 
 scenario: BaseScenario = None
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="pwntk", description="Pawn toolkit")
     parser.add_argument("-l", "--list", action="store_true", help="List available scenarios")
-    parser.add_argument("-s", "--scenario", action="store",
-            help="Scenario to deploy")
+    parser.add_argument("-s", "--scenario", action="store", help="Scenario to deploy")
     
     args, _ = parser.parse_known_args()
-
-    # pprint(args)
 
     if args.list is True:
         print("\nScenarios\n----------")
@@ -32,6 +28,7 @@ if __name__ == "__main__":
     if args.scenario == StarbucksScenario.name:
         scenario = StarbucksScenario()
     
-    scenario.validate_options()
+    scenario.validate_options(parser)
     scenario.validate_programs()
+    scenario.run()
 
