@@ -2,6 +2,7 @@ import sys
 import os
 import shlex
 import subprocess
+from typing import List
 from pwntk.base_scenario import BaseScenario
 from pwntk.utils.environment import is_dev
 from pwntk.utils.file import timestamp_file
@@ -17,12 +18,19 @@ class StarbucksScenario(BaseScenario):
     programs = ["/usr/bin/mitmdump", "/usr/bin/ettercap"]
     mode: int = 2
     path: str = None
+    ignored_domains = ["facebook", "google", "gmail", "apple"]
+
+    def build_ignored_regex(self) -> str:
+        d = "\.com|".join(self.ignored_domains)
+        return f"^(.+\.)?({d}):443$"
 
     def run(self):
+        ignored_domains_regex = self.build_ignored_regex()
+        pprint(ignored_domains_regex)
         path_to_file = os.path.join(self.path, timestamp_file("mitmdump.log"))
-        cmd = shlex.split(f"{self.programs[0]} --quiet --transparent -w {path_to_file}")
-        print(f"executing: {cmd}")
-        mitmdump = subprocess.Popen(cmd)
+        cmd = f"{self.programs[0]} --quiet --transparent -w {path_to_file}"
+        print(f"Executing: {cmd}")
+        mitmdump = subprocess.Popen(shlex.split(cmd))
         processes.append(mitmdump)
 
     def validate_options(self, parser):
