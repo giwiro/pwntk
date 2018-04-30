@@ -1,7 +1,6 @@
-from .base_scenario import BaseScenario
 from pwntk.scenarios import StarbucksScenario
 
-__all__ = ["BaseScenario", "scenario_names"]
+__all__ = ["scenario_names"]
 
 scenario_names = [StarbucksScenario.name]
 

@@ -8,6 +8,8 @@ name = "pypi"
 [packages]
 typing = "*"
 python-nmap = "*"
+emoji = "*"
+wget = "*"
 
 [requires]
 python_version = "3.6"
