@@ -18,7 +18,7 @@ def ensure_scripts_folder():
 def download_scripts():
     path = f"{scripts_path}/sslstrip.py"
     if os.path.exists(path):
-        print_check("Found sslstrip.py, skipping download")
+        print_check(f"Found {path}, skipping download")
         return
     print("Downloading sslstrip.py ...")
     file = wget.download(sslstrip_url, path)

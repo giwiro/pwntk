@@ -1,7 +1,7 @@
 import emoji
 from typing import NamedTuple
 
-__all__ = ["print_error", "print_check", "print_kill_pid"]
+__all__ = ["Bcolors", "print_error", "print_check", "print_executing", "print_kill_pid"]
 
 
 class Bcolors(NamedTuple):
@@ -25,3 +25,7 @@ def print_check(msg: str):
 
 def print_kill_pid(pid: int):
     print(emoji.emojize(f":hocho: Killing PID: {pid}", use_aliases=True))
+
+
+def print_executing(cmd: str):
+    print(emoji.emojize(f":computer: {Bcolors.OKGREEN}Executing:{Bcolors.ENDC} {Bcolors.OKBLUE}{cmd}{Bcolors.ENDC}", use_aliases=True))

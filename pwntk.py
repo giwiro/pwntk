@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-import os
+import signal
 import sys
 from pwntk import scenario_names
 from pwntk.base_scenario import BaseScenario
@@ -13,8 +13,17 @@ from pwntk.utils.logger import print_error
 scenario: BaseScenario = None
 
 
-def ensure_pwntk_home():
-    ensure_folder_exist(vars.get('pwntk_home'))
+def print_banner():
+    print(f"""\
+                     _              _ _    _ _   
+ _ ____      ___ __ | |_ ___   ___ | | | _(_| |_ 
+| '_ \ \ /\ / | '_ \| __/ _ \ / _ \| | |/ | | __|
+| |_) \ V  V /| | | | || (_) | (_) | |   <| | |_ 
+| .__/ \_/\_/ |_| |_|\__\___/ \___/|_|_|\_|_|\__| v0.0.1
+|_|  
+    - Greetings, Professor Falken
+    - Hello
+    """)
 
 
 if __name__ == "__main__":
@@ -39,13 +48,14 @@ if __name__ == "__main__":
     if args.scenario == StarbucksScenario.name:
         scenario = StarbucksScenario()
 
-    ensure_pwntk_home()
+    ensure_folder_exist(vars.get('pwntk_home'))
 
     scenario.validate_options(parser)
     scenario.setup()
     scenario.validate_programs()
     scenario.validate_files()
+    print_banner()
+    scenario.print_name()
     scenario.run()
 
-    while True:
-        pass
+    signal.pause()

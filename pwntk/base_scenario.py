@@ -22,7 +22,7 @@ class BaseScenario(metaclass=ABCMeta):
                     print_error(f"Could not find file in location: {f}\n")
                     sys.exit(0)
             print_check("All file dependencies checked")
-        #else:
+        # else:
         #    print("No file dependencies to check")
 
     @classmethod
@@ -33,7 +33,7 @@ class BaseScenario(metaclass=ABCMeta):
                     print_error(f"Could not find program: {p}\n")
                     sys.exit(0)
             print_check("All program dependencies checked")
-        #else:
+        # else:
         #    print("No program dependencies to check")
 
     def setup(self):
@@ -42,3 +42,8 @@ class BaseScenario(metaclass=ABCMeta):
     @abstractmethod
     def run(self):
         pass
+
+    @classmethod
+    def print_name(cls):
+        print(f"[Scenario]: {cls.name}\n")
+
