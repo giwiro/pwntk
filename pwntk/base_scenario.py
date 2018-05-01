@@ -1,7 +1,7 @@
 import sys
 from typing import List
 from abc import abstractmethod, ABCMeta
-from pwntk.utils.file import program_exists, file_exists
+from pwntk.utils.io import program_exists, file_exists
 from pwntk.utils.logger import print_check, print_error
 
 
@@ -19,11 +19,11 @@ class BaseScenario(metaclass=ABCMeta):
         if len(cls.files) > 0:
             for f in cls.files:
                 if file_exists(f) is not True:
-                    print_error(f"Could not find file in location: {f}\n")
+                    print_error(f"Could not find io in location: {f}\n")
                     sys.exit(0)
-            print_check("All file dependencies checked")
+            print_check("All io dependencies checked")
         # else:
-        #    print("No file dependencies to check")
+        #    print("No io dependencies to check")
 
     @classmethod
     def validate_programs(cls):

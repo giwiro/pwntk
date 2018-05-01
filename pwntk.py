@@ -5,7 +5,7 @@ import sys
 from pwntk import scenario_names
 from pwntk.base_scenario import BaseScenario
 from pwntk.scenarios import StarbucksScenario
-from pwntk.utils.file import ensure_folder_exist
+from pwntk.utils.io import ensure_folder_exist
 from pwntk.vars import vars
 
 from pwntk.utils.logger import print_error

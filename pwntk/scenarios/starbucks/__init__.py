@@ -1,12 +1,8 @@
 import atexit
 import os
-import shlex
-import subprocess
 from pwntk.base_scenario import BaseScenario
-# from pwntk.utils.environment import is_dev
-from pwntk.utils.file import timestamp_file
-from pwntk.utils.logger import print_kill_pid, print_check, print_executing
-from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts
+from pwntk.utils.io import timestamp_file, execute_cmd, kill_proccesses
+from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts, ensure_port_fwd
 from pwntk.vars import vars
 
 __all__ = ["StarbucksScenario"]
@@ -16,8 +12,7 @@ processes = []
 
 class StarbucksScenario(BaseScenario):
     name = "starbucks"
-    # programs = ["mitmdump", "ettercap"]
-    programs = ["mitmdump"]
+    programs = ["mitmdump", "ettercap", "sysctl"]
     files = [f"{vars.get('pwntk_home')}/mitmproxy/scripts/sslstrip.py"]
     # mode: int = 2
     path: str = None
@@ -30,6 +25,7 @@ class StarbucksScenario(BaseScenario):
     def setup(self):
         ensure_scripts_folder()
         download_scripts()
+        ensure_port_fwd()
 
     def run(self):
         ignored_domains_regex = self.build_ignored_regex()
@@ -37,9 +33,7 @@ class StarbucksScenario(BaseScenario):
         if self.path is not None:
             path_to_file = os.path.join(self.path, timestamp_file("mitmdump.log"))
             cmd += f" -w {path_to_file}"
-        print_executing(cmd)
-        mitmdump = subprocess.Popen(shlex.split(cmd))
-        print_check(f"Started PID: {mitmdump.pid}")
+        mitmdump = execute_cmd(cmd)
         processes.append(mitmdump)
 
     def validate_options(self, parser):
@@ -54,14 +48,7 @@ class StarbucksScenario(BaseScenario):
 
 
 def clean_up():
-    print("Cleaning up:")
-    if len(processes) == 0:
-        print("\tNo processes to clean")
-    else:
-        for p in processes:
-            print_kill_pid(p.pid)
-            p.kill()
-        print_check("Finished cleaning processes")
+    kill_proccesses(processes)
 
 
 atexit.register(clean_up)
