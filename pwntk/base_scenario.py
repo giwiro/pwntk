@@ -36,9 +36,8 @@ class BaseScenario(metaclass=ABCMeta):
         #else:
         #    print("No program dependencies to check")
 
-    #@abstractmethod
-    #def setup(self):
-    #    pass
+    def setup(self):
+        pass
 
     @abstractmethod
     def run(self):

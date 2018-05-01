@@ -6,6 +6,7 @@ from pwntk.base_scenario import BaseScenario
 from pwntk.utils.environment import is_dev
 from pwntk.utils.file import timestamp_file
 from pwntk.utils.logger import print_kill_pid, print_check
+from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts
 from pwntk.vars import vars
 
 __all__ = ["StarbucksScenario"]
@@ -25,6 +26,10 @@ class StarbucksScenario(BaseScenario):
     def build_ignored_regex(self) -> str:
         d = "\.com|".join(self.ignored_domains)
         return f"^(.+\.)?({d}):443$"
+
+    def setup(self):
+        ensure_scripts_folder()
+        download_scripts()
 
     def run(self):
         ignored_domains_regex = self.build_ignored_regex()

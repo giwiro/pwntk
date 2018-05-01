@@ -42,9 +42,9 @@ if __name__ == "__main__":
     ensure_pwntk_home()
 
     scenario.validate_options(parser)
+    scenario.setup()
     scenario.validate_programs()
     scenario.validate_files()
-    # scenario.setup()
     scenario.run()
 
     while True:
