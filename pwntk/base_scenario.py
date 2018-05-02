@@ -20,7 +20,7 @@ class BaseScenario(metaclass=ABCMeta):
             for f in cls.files:
                 if file_exists(f) is not True:
                     print_error(f"Could not find io in location: {f}\n")
-                    sys.exit(0)
+                    sys.exit(1)
             print_check("All io dependencies checked")
         # else:
         #    print("No io dependencies to check")
@@ -31,7 +31,7 @@ class BaseScenario(metaclass=ABCMeta):
             for p in cls.programs:
                 if program_exists(p) is not True:
                     print_error(f"Could not find program: {p}\n")
-                    sys.exit(0)
+                    sys.exit(1)
             print_check("All program dependencies checked")
         # else:
         #    print("No program dependencies to check")

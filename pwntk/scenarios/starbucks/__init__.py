@@ -1,8 +1,9 @@
 import atexit
 import os
 from pwntk.base_scenario import BaseScenario
-from pwntk.utils.io import timestamp_file, execute_cmd, kill_proccesses
-from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts, ensure_port_fwd
+from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts
+from pwntk.utils.io import timestamp_file, execute_cmd, kill_processes
+from pwntk.utils.net import ensure_port_fwd
 from pwntk.vars import vars
 
 __all__ = ["StarbucksScenario"]
@@ -48,7 +49,7 @@ class StarbucksScenario(BaseScenario):
 
 
 def clean_up():
-    kill_proccesses(processes)
+    kill_processes(processes)
 
 
 atexit.register(clean_up)

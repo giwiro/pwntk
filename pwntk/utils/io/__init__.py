@@ -2,13 +2,14 @@ import os
 import shlex
 import time
 from shutil import which
+import subprocess
 from subprocess import Popen, check_output
 from typing import List
 
 from pwntk.utils.logger import print_executing, print_check, print_kill_pid
 
-__all__ = ["program_exists", "file_exists", "timestamp_file",
-           "ensure_folder_exist", "execute_cmd"]
+__all__ = ["program_exists", "file_exists", "timestamp_file", "ensure_folder_exist",
+           "kill_processes", "execute_cmd", "get_output_from_cmd"]
 
 
 def program_exists(name: str) -> bool:
@@ -31,7 +32,7 @@ def ensure_folder_exist(path: str):
         os.makedirs(path)
 
 
-def kill_proccesses(processes: List[Popen]):
+def kill_processes(processes: List[Popen]):
     print("Cleaning up:")
     if len(processes) == 0:
         print("\tNo processes to clean")
@@ -42,9 +43,12 @@ def kill_proccesses(processes: List[Popen]):
         print_check("Finished cleaning processes")
 
 
-def execute_cmd(cmd: str) -> Popen:
+def execute_cmd(cmd: str, sudo: bool = False) -> Popen:
     print_executing(cmd)
-    proccess = Popen(shlex.split(cmd))
+    if not sudo:
+        proccess = Popen(shlex.split(cmd))
+    else:
+        proccess = Popen(shlex.split(cmd), stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     print_check(f"Started PID: {proccess.pid}")
     return proccess
 

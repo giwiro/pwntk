@@ -38,11 +38,11 @@ if __name__ == "__main__":
         for name in scenario_names:
             print(name)
         print("\n")
-        sys.exit(0)
+        sys.exit(1)
 
     if args.scenario is None or args.scenario not in scenario_names:
         print_error("Please select a valid scenario.\nTo see the list use the paramter --list (-l)\n")
-        sys.exit(0)
+        sys.exit(1)
 
     # Evaluate and execute the scenario class
     if args.scenario == StarbucksScenario.name:
