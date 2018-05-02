@@ -1,10 +1,10 @@
 import os
 import shlex
 import time
-from shutil import which
 import subprocess
-from subprocess import Popen, check_output
+from shutil import which
 from typing import List
+from subprocess import Popen, check_output
 
 from pwntk.utils.logger import print_executing, print_check, print_kill_pid
 
@@ -18,6 +18,12 @@ def program_exists(name: str) -> bool:
 
 def file_exists(path: str) -> bool:
     return os.path.exists(path)
+
+
+def find_file_path(path: str, filename: str) -> str:
+    for root, dirs, files in os.walk(path):
+        if filename in files:
+            return f"{root}/{filename}"
 
 
 def timestamp_file(filestr: str) -> str:

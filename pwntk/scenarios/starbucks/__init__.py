@@ -1,7 +1,7 @@
 import atexit
 import os
 from pwntk.base_scenario import BaseScenario
-from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts
+from pwntk.scenarios.starbucks.setup import ensure_scripts_folder, download_scripts, ensure_copy_etter_conf
 from pwntk.utils.io import timestamp_file, execute_cmd, kill_processes
 from pwntk.utils.net import ensure_port_fwd
 from pwntk.vars import vars
@@ -27,6 +27,7 @@ class StarbucksScenario(BaseScenario):
         ensure_scripts_folder()
         download_scripts()
         ensure_port_fwd()
+        ensure_copy_etter_conf()
 
     def run(self):
         ignored_domains_regex = self.build_ignored_regex()
