@@ -15,7 +15,7 @@ def ensure_port_fwd():
     sysctl_read_out = get_output_from_cmd(cmd_red)
     fwd = int(chr(sysctl_read_out[0]))
     if fwd == 1:
-        print_check("Ip forward value is 1")
+        print_check("\tIp forward value is 1")
     else:
         print_error(f"""Ip forwarding value is 0
 

@@ -8,7 +8,7 @@ from subprocess import Popen, check_output
 
 from pwntk.utils.logger import print_executing, print_check, print_kill_pid
 
-__all__ = ["program_exists", "file_exists", "timestamp_file", "ensure_folder_exist",
+__all__ = ["program_exists", "file_exists", "find_file_path", "timestamp_file", "ensure_folder_exist",
            "kill_processes", "execute_cmd", "get_output_from_cmd"]
 
 
