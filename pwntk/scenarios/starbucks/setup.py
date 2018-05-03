@@ -49,7 +49,7 @@ def ensure_etter_conf():
 
 Try to run this command:
 
-    sudo cp {local_config} {path_config}
+    [sudo] cp {local_config} {path_config}
     
         """)
         sys.exit(1)

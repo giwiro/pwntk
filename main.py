@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import argparse
 import signal
 import sys
@@ -26,7 +25,7 @@ def print_banner():
     """)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="pwntk", description="Pawn toolkit")
     parser.add_argument("-l", "--list", action="store_true", help="List available scenarios")
     parser.add_argument("-s", "--scenario", action="store", help="Scenario to deploy")

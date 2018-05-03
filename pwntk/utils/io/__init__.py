@@ -39,10 +39,10 @@ def ensure_folder_exist(path: str):
 
 
 def kill_processes(processes: List[Popen]):
-    print("Cleaning up:")
     if len(processes) == 0:
-        print("\tNo processes to clean")
+        print("No processes to clean ¯\_(ツ)_/¯")
     else:
+        print("Cleaning up:")
         for p in processes:
             print_kill_pid(p.pid)
             p.kill()
